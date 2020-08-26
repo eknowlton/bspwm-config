@@ -1,0 +1,19 @@
+#!/bin/bash
+
+pkill polybar &
+
+PRIMARY=$(xrandr --query | grep " primary" | cut -d " " -f1)
+OUTPUTS=$(xrandr --query | grep " connected" | grep -v " primary" | cut -d " " -f1)
+
+MONITOR=$PRIMARY polybar default &
+
+for OUT in $OUTPUTS; do
+  echo $OUT
+  RES=$(xrandr --query | grep $OUT | grep -v " primary" | cut -d " " -f3 | cut -d "+" -f1)
+  echo $RES
+  if [[ $RES == "3840x2160" ]]; then
+    MONITOR=$OUT polybar highres  &
+  else
+    MONITOR=$OUT polybar default &
+  fi
+done
