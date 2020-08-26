@@ -1,0 +1,10 @@
+#!/bin/bash
+DMENU='dmenu -b -nb #f0411a -nf #000000 -sb #ab280a -sf #ffffff -m 0'
+choice=$(echo -e "lock\nshutdown\nreboot\nquit" | $DMENU)
+
+case "$choice" in
+  lock) dm-tool lock & ;;
+  shutdown) shutdown -h now & ;;
+  reboot) shutdown -r now & ;;
+  quit) bspc quit & ;;
+esac

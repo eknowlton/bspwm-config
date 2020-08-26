@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+term_cmd=${TERM_CMD:-urxvt -e}
+ssh_cmd=${SSH_CMD:-ssh -t}
+ssh_configs=($HOME/.ssh/config $HOME/.ssh/profiles/kimmel $HOME/.ssh/profiles/mote)
+remote_cmd=${REMOTE_CMD}
+
+ssh_hosts=()
+for config in ${ssh_configs[*]}
+do
+  ssh_hosts+=( $(grep "^Host\s\+[^*]" $config | cut -d " " -f 2-)  )
+done
+
+ssh_host=$(printf '%s\n' "${ssh_hosts[@]}" | dmenu -b -i "$@" -m 0)
+
+if [ -n "$ssh_host" ]; then
+  ssh $ssh_host hash mosh-server 2> /dev/null
+  if [ $? -eq 0 ]; then
+    ssh_cmd="mosh"
+  fi
+  $term_cmd $ssh_cmd $ssh_host $remote_cmd
+fi
