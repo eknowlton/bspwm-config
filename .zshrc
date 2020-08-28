@@ -128,5 +128,6 @@ alias vim="nvim"
 alias cat="bat"
 alias ls="exa"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias show="feh --scale-down --auto-zoom"
 
 export TERM="xterm"

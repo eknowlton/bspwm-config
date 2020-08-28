@@ -250,7 +250,7 @@ interval = 1
 date = " %Y-%m-%d"
 date-alt = " %Y-%m-%d"
 
-time = %H:%M
+time = %I:%M
 time-alt = %H:%M:%S
 
 format-prefix = 
@@ -290,7 +290,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 type = internal/battery
 battery = BAT0
 adapter = AC
-full-at = 98
+full-at = 99
 
 time-format = %H:%M
 
