@@ -1,0 +1,21 @@
+#!/bin/bash
+
+OUTPUTS=$(xrandr --query | grep " connected" | cut -d " " -f1)
+
+SCREEN=$(printf '%s\n' ${OUTPUTS[@]} | dmenu)
+RESOLUTION=$(xrandr --query | grep $SCREEN | head -n 1)
+
+if [[ $RESOLUTION =~ ([0-9]+)x([0-9]+)\+([0-9]+)\+([0-9]+) ]]; then
+  if [ ${BASH_REMATCH[3]} -ne 0 ]; then
+    OPTIONS="$OPTIONS -x ${BASH_REMATCH[3]}"
+  fi
+
+  if [ ${BASH_REMATCH[4]} -ne 0 ]; then
+    OPTIONS="$OPTIONS -y ${BASH_REMATCH[4]}"
+  fi
+
+  notify-send -u normal "Starting screen recording on $SCREEN in 3 seconds ..." -t 3000
+  recordmydesktop -o ~/screenshots/recording-$(date +"%m-%d-%Y-%H-%M") --device pulse $OPTIONS --height ${BASH_REMATCH[2]} --width ${BASH_REMATCH[1]} --delay 3
+else
+  notify-send -u normal "Failed to get screen resolution and dimensions."
+fi
