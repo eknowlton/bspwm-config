@@ -142,9 +142,6 @@ super + {Left,Down,Up,Right}
 super + shift + p
         maim -s ~/screenshots/$(date +"%m-%d-%Y-%H-%M").png
 
-super + shift + r
-        ~/.local/bin/record-screen
-
 # optimus-manager
 ctrl + alt + super + n
         optimus-manager --switch nvidia --no-confirm
