@@ -140,7 +140,7 @@ super + {Left,Down,Up,Right}
 
 # screenshot
 super + shift + p
-        maim -s ~/screenshots/$(date +"%m-%d-%Y-%H-%M").png
+        maim -s ~/Screenshots/$(date +"%m-%d-%Y-%H-%M").png
 
 # optimus-manager
 ctrl + alt + super + n

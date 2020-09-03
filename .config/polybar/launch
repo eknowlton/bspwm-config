@@ -5,7 +5,7 @@ pkill polybar &
 PRIMARY=$(xrandr --query | grep " primary" | cut -d " " -f1)
 OUTPUTS=$(xrandr --query | grep " connected" | grep -v " primary" | cut -d " " -f1)
 
-MONITOR=$PRIMARY polybar default &
+MONITOR=$PRIMARY polybar primary &
 
 for OUT in $OUTPUTS; do
   echo $OUT
