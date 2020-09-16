@@ -86,9 +86,6 @@ prompt_end() {
   printf "\n ➜";
 }
 
-
-
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -131,3 +128,7 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias show="feh --scale-down --auto-zoom"
 
 export TERM="xterm"
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+eval "$(direnv hook zsh)"

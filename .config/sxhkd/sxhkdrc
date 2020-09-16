@@ -13,7 +13,7 @@ XF86AudioMute
 XF86AudioNext
         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 
-XF86AudioPrevious
+XF86AudioPrev
         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
 
 XF86AudioPause
@@ -154,3 +154,5 @@ ctrl + alt + super + i
 ctrl + alt + super + h
         optimus-manager --switch hybrid --no-confirm
 
+super + End
+        dunstctl set-paused toggle
