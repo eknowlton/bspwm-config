@@ -1,11 +1,4 @@
 #! /bin/sh
-
-feh --bg-fill --randomize ~/wallpapers/* &
-pgrep -x picom > /dev/null || picom --experimental-backends &
-pgrep -x sxhkd > /dev/null || sxhkd &
-
-$HOME/.config/polybar/launch
-
 PRIMARY=$(xrandr --query | grep " primary" | cut -d " " -f1)
 OUTPUTS=$(xrandr --query | grep " connected" | grep -v " primary" | cut -d " " -f1)
 
@@ -16,8 +9,12 @@ for OUT in $OUTPUTS; do
   bspc monitor %$OUT -d $((WKSP=WKSP+1)) $((WKSP=WKSP+1))
 done
 
+$HOME/.config/polybar/launch
+
+feh --bg-fill --randomize ~/Wallpapers/* &
+
 bspc config single_monocle           true
-bspc config pointer_follows_focus	   true
+bspc config pointer_follows_monitor  true
 bspc config border_width             0
 bspc config window_gap               5
 
@@ -28,3 +25,7 @@ bspc config gapless_monocle          true
 bspc rule -a imv state=floating
 bspc rule -a feh state=floating
 bspc rule -a realvnc-vncviewer state=floating
+bspc rule -a Ulauncher Preferences state=floating
+bspc rule -a XEyes state=floating follow=on sticky=on
+
+pgrep -x xeyes > /dev/null || xeyes -fg black &

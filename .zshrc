@@ -111,6 +111,21 @@ prompt_end() {
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+function secret {  # list preferred id last
+  output="${HOME}/$(basename ${1}).$(date +%F).enc"
+  gpg --encrypt --armor \
+    --output ${output} \
+    -r 0xD9A2B8BB502598FE \
+    -r eknowlton@gmail.com \
+    "${1}" && echo "${1} -> ${output}" 
+}
+
+function reveal {
+  output=$(echo "${1}" | rev | cut -c16- | rev)
+  gpg --decrypt --output ${output} "${1}" \
+    && echo "${1} -> ${output}" 
+}
 
 alias vim="nvim"
 
@@ -118,7 +133,7 @@ alias vim="nvim"
 
 [ -f /opt/asdf-vm/asdf.sh ] && source /opt/asdf-vm/asdf.sh
 
-[ -d $HOME/.local/bin  ] && export PATH="$PATH:$HOME/.local/bin"
+[ -d $HOME/.local/bin  ] && export PATH="$HOME/.local/bin:$PATH"
 
 [ -d $HOME/.cargo ] && export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -132,3 +147,9 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 eval "$(direnv hook zsh)"
+
+# These are copied directly from gpg-agent manpages
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi

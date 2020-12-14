@@ -27,7 +27,7 @@ super + Return
 	alacritty
 
 # program launcher
-super + @space
+ctrl + space
 	exec $HOME/.local/bin/app-menu
 
 super + shift + @space
@@ -65,7 +65,6 @@ super + g
 super + ctrl + Escape 
         $HOME/.local/bin/power-menu
 
-
 #
 # state/flags
 #
@@ -81,6 +80,8 @@ super + ctrl + {m,x,y,z}
 #
 # focus/swap
 #
+super + minus
+	bspc node `bspc query -N -n .hidden | head -1` -g sticky -g hidden -f
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
@@ -140,7 +141,11 @@ super + {Left,Down,Up,Right}
 
 # screenshot
 super + shift + p
-        maim -s ~/Screenshots/$(date +"%m-%d-%Y-%H-%M").png
+        maim -s ~/Screenshots/$(date +"%m-%d-%Y-%H-%M-%s").png
+
+# screenshot
+super + ctrl + shift + p
+        maim -s ~/Evidence/$(date +"%m-%d-%Y-%H-%M-%s").png
 
 # optimus-manager
 ctrl + alt + super + n

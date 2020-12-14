@@ -51,7 +51,7 @@ font-2 = siji:pixelsize=11;1
 
 modules-left = bspwm xwindow
 modules-center = spotify
-modules-right = fs-home fs-root memory cpu wlan eth1 eth2 eth3 battery temperature date dunst
+modules-right = fs-home fs-root memory cpu wlan eth1 eth2 eth3 eth4 eth5 battery temperature date timer dunst
 
 tray-position = right
 tray-padding = 2
@@ -90,7 +90,7 @@ font-2 = siji:pixelsize=11;1
 
 modules-left = bspwm xwindow
 modules-center = spotify
-modules-right = fs-home fs-root memory cpu wlan eth1 eth2 eth3 battery temperature date
+modules-right = fs-home fs-root memory cpu wlan eth1 eth2 eth3 eth4 eth5 battery temperature date
 
 wm-restack = bspwm
 ;override-redirect = true
@@ -121,11 +121,11 @@ module-margin-right = 2
 
 font-0 = fixed:pixelsize=16;1
 font-1 = unifont:fontformat=truetype:size=14:antialias=false;0
-font-2 = siji:pixelsize=16;1
+font-2 = siji:pixelsize=24;1
 
 modules-left = bspwm xwindow
 modules-center = spotify
-modules-right = fs-home fs-root memory cpu wlan eth1 eth2 eth3 battery temperature date
+modules-right = fs-home fs-root memory cpu wlan eth1 eth2 eth3 eth4 eth5 battery temperature date
 
 wm-restack = bspwm
 ;override-redirect = true
@@ -137,7 +137,7 @@ type = custom/script
 interval = 1
 format-prefix = " "
 format = <label>
-exec = python $HOME/.local/bin/spotify-status -f '{artist}: {song}'
+exec = python $HOME/.config/polybar/spotify-status -f '{artist}: {song}'
 format-underline = #1db954
 
 [module/xwindow]
@@ -273,6 +273,38 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
+[module/eth4]
+type = internal/network
+interface = ens4
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/eth5]
+type = internal/network
+interface = ens1u2u1u2
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
 [module/date]
 type = internal/date
 interval = 1
@@ -380,3 +412,15 @@ format-foreground = ${colors.primary}
 
 hook-0 = echo "%{T2}%{A1:notify-send "DUNST_COMMAND_PAUSE" && polybar-msg hook dunst 2:}%{A}" &
 hook-1 = echo "%{T2}%{A1:notify-send "DUNST_COMMAND_RESUME" && polybar-msg hook dunst 1:}%{A}" &
+
+[module/timer]
+
+type = custom/script
+
+exec = $HOME/.config/polybar/timer tail '' 5
+tail = true
+
+click-left = $HOME/.config/polybar/timer new 20 '' 'notify-send "Look at something 20 ft away."' ; $HOME/.config/polybar/timer update %pid%
+click-middle = $HOME/.config/polybar/timer kill ; $HOME/.config/polybar/timer update %pid%
+scroll-up = $HOME/.config/polybar/timer increase 60 || $HOME/.config/polybar/timer new 1 'TIMER:' 'notify-send -u critical "Timer expired."' ; $HOME/.config/polybar/timer update %pid%
+scroll-down = $HOME/.config/polybar/timer increase -60 ; $HOME/.config/polybar/timer update %pid%

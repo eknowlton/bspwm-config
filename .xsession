@@ -1,7 +1,15 @@
 #!/bin/bash
 
+autorandr -c --skip-option crtc
+
+udiskie --tray &
 pasystray &
 blueman-applet &
-xset s 120
+ulauncher --no-window-shadow &
+
+picom --experimental-backends &
+sxhkd &
+
+pkill xset && xset s 240
 xss-lock -- dm-tool lock &
-#clipmenud > /dev/null 2>&1 & # Disabled because it currently records copied passwords...
+numlockx &
