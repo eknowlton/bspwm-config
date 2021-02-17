@@ -2,14 +2,35 @@
 PRIMARY=$(xrandr --query | grep " primary" | cut -d " " -f1)
 OUTPUTS=$(xrandr --query | grep " connected" | grep -v " primary" | cut -d " " -f1)
 
-bspc monitor %$PRIMARY -d cli web comm media
+# If only a primary is connected
+# Configure the primary
+if [ $($OUTPUTS | wc -l) -eq 0 ]; then
+  bspc monitor %$PRIMARY -d cli web comm media 5 6 7 8
+fi
 
-WKSP=4
-for OUT in $OUTPUTS; do
-  bspc monitor %$OUT -d $((WKSP=WKSP+1)) $((WKSP=WKSP+1))
-done
+# If a primary is connected, with other extended monitors connected
+# Configure the primary
+if [ $($PRIMARY | wc -l) -eq 1 ] && [ $($OUTPUTS | wc -l) -gt 0 ]; then
+  bspc monitor %$PRIMARY -d cli web comm media
+fi
+
+# If no monitor is primary, and only one other output connected
+# Confgure the only connected monitor
+if [ $($PRIMARY | wc -l) -eq 0 ] && [ $($OUTPUTS | wc -l) -eq 1 ]; then
+  bspc monitor %${OUTPUTS[0]} -d cli web comm media 5 6 7 8
+else
+  # If a primary is connected, with other extended monitors connected
+  # Configure the other extended monitors
+  WKSP=4
+  for OUT in $OUTPUTS; do
+    bspc monitor %$OUT -d $((WKSP=WKSP+1)) $((WKSP=WKSP+1))
+  done
+fi
+
 
 $HOME/.config/polybar/launch
+
+$HOME/.local/bin/check_for_pacman_upgrades &
 
 feh --bg-fill --randomize ~/Wallpapers/* &
 
@@ -29,3 +50,5 @@ bspc rule -a Ulauncher Preferences state=floating
 bspc rule -a XEyes state=floating follow=on sticky=on
 
 pgrep -x xeyes > /dev/null || xeyes -fg black &
+
+bspc config external_rules_command ~/.config/bspwm/external_rules

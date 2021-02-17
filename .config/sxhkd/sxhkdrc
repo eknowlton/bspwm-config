@@ -141,11 +141,13 @@ super + {Left,Down,Up,Right}
 
 # screenshot
 super + shift + p
-        maim -s ~/Screenshots/$(date +"%m-%d-%Y-%H-%M-%s").png
+        flameshot gui -p ~/Screenshots
+        #maim -s ~/Screenshots/$(date +"%m-%d-%Y-%H-%M-%s").png
 
-# screenshot
+# screenshot to be Saved
 super + ctrl + shift + p
-        maim -s ~/Evidence/$(date +"%m-%d-%Y-%H-%M-%s").png
+        flameshot gui -p ~/Evidence
+        #maim -s ~/Evidence/$(date +"%m-%d-%Y-%H-%M-%s").png
 
 # optimus-manager
 ctrl + alt + super + n

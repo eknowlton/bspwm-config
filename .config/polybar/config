@@ -35,7 +35,7 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 2
 line-color = #f00
 
 border-size = 0
@@ -72,7 +72,7 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 2
 line-color = #f00
 
 border-size = 0
@@ -107,7 +107,7 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 2
 line-color = #f00
 
 border-size = 0
@@ -142,7 +142,7 @@ format-underline = #1db954
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...%
+label = %title:0:80:...%
 
 [module/fs-home]
 type = internal/fs
@@ -275,7 +275,7 @@ format-disconnected =
 
 [module/eth4]
 type = internal/network
-interface = ens4
+interface = enp12s0
 interval = 3.0
 
 format-connected-underline = #55aa55
@@ -291,7 +291,7 @@ format-disconnected =
 
 [module/eth5]
 type = internal/network
-interface = ens1u2u1u2
+interface = enp9s0u2u1u2
 interval = 3.0
 
 format-connected-underline = #55aa55

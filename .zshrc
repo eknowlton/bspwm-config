@@ -141,10 +141,11 @@ alias cat="bat"
 alias ls="exa"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias show="feh --scale-down --auto-zoom"
+alias tf="taskfzf"
 
-export TERM="xterm"
 export EDITOR="nvim"
 export VISUAL="nvim"
+export TERM="xterm-256color"
 
 eval "$(direnv hook zsh)"
 
